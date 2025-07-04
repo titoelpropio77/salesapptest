@@ -65,8 +65,8 @@ routes/
 
 1. Clona el repositorio:
 
-- ```git clone https://github.com/titoelpropio77/sales_app.git ```
-- ```cd sales_app ```
+- ```git clone https://github.com/titoelpropio77/salesapptest.git ```
+- ```cd salesapptest ```
 
 2. Construye y levanta los contenedores:
 
@@ -75,7 +75,7 @@ routes/
 
 2. Accede al contenedor para ejecutar comandos de Laravel:
 
-``` docker exec -it sales_app-app-1 bash ```
+``` docker exec -it salesapptest-app-1 bash ```
 
 3. Dentro del contenedor, ejecuta los siguientes comandos:
 
@@ -129,10 +129,6 @@ Puedes descargar un resumen de la orden en PDF desde:
 Durante el proceso de instalación se requiere ejecutar:
 
 composer install para instalar las dependencias de PHP
-
-npm install para instalar las dependencias del frontend
-
-npm run build para compilar los assets con Vite
 
 
 ## ✍️ Autor
