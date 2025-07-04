@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+    app:
+        image: test_sales_app
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+        - "8085:80"
+        - "5174:5173"
+        volumes:
+            - .:/var/www/html
+        environment:
+        - NODE_ENV=development
+        networks:
+            sales_app_web_net:
+                aliases:
+                    - sales_app_web
+
+networks:
+  sales_app_web_net:
+    name: sales_app_web_net
+    driver: bridge
