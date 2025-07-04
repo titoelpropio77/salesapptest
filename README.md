@@ -87,6 +87,7 @@ routes/
 - ```php artisan migrate``` 
 - ```chmod 777 database/database.sqlite ```
 - ```chmod 777 .env ```
+- `` php artisan db:seed --class=ProductSeeder``
 
 4. Actualizar ENV:  MAIL_USERNAME  y MAIL_PASSWORD
 - Debes actaulizar las env del servicio de correo para el correcto funcionamiento
