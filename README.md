@@ -1,10 +1,13 @@
-# 🚀 Fitmewise App (Dockerized Laravel + Vite + Apache)
+
+# 🛒 Laravel API de Productos y Órdenes
+
+
 
 > ⚠️ **Requisito previo**: Debes tener instalado Docker y Docker Compose.  
 > Puedes descargarlo desde el sitio oficial:  
 > 👉 https://www.docker.com/products/docker-desktop
 
-Este proyecto contiene una aplicación Laravel configurada para ejecutarse en contenedores Docker, con Apache como servidor web, Node.js para Vite y SqlLite como base de datos (opcional si se añade).
+API REST desarrollada con Laravel para la gestión de productos, órdenes de compra, correos transaccionales y generación de PDF.
 
 ---
 
@@ -12,9 +15,7 @@ Este proyecto contiene una aplicación Laravel configurada para ejecutarse en co
 
 - **Laravel**: 12.x
 - **PHP**: 8.3 (apache)
-- **Node.js**: 20.x (Vite compatible)
 - **Composer**: latest
-- **NPM**: 10.x
 - **Docker Compose**: 3.9
 
 ---
@@ -25,12 +26,47 @@ Una vez el contenedor esté en ejecución, puedes acceder al proyecto en:
 
 http://localhost:8085
 
+
+## 📁 Estructura del proyecto
+
+```
+app/
+├── Http/
+│   └── Controllers/
+│       ├── Api/
+│           ├── ProductController.php
+│           ├── OrderController.php
+│           └── PdfController.php
+app/
+├── Models/
+│   ├── Product.php
+│   ├── Order.php
+│   └── Client.php
+resources/
+├── views/
+│   ├── emails/orders/summary.blade.php
+│   └── pdf/order.blade.php
+routes/
+└── api.php
+```
+
+---
+## 🔗 Endpoints
+
+| Método | Ruta                  | Descripción                                |
+|--------|-----------------------|--------------------------------------------|
+| GET    | `/api/products?page=1`       | Listado de productos con paginación y búsqueda por nombre (`?search=`) |
+| POST   | `/api/orders`         | Crear una orden con cliente y productos    |
+| GET    | `/api/orders/{id}/pdf`| Generar PDF con resumen de la orden        |
+
+---
+
 ## ⚙️ Instalación (con Docker)
 
 1. Clona el repositorio:
 
-- ```git clone https://github.com/titoelpropio77/fitmewise_test_weather.git ```
-- ```cd fitmewise_test_weather ```
+- ```git clone https://github.com/titoelpropio77/sales_app.git ```
+- ```cd sales_app ```
 
 2. Construye y levanta los contenedores:
 
@@ -39,7 +75,7 @@ http://localhost:8085
 
 2. Accede al contenedor para ejecutar comandos de Laravel:
 
-``` docker exec -it fitmewise_test_weather-app-1 bash ```
+``` docker exec -it sales_app-app-1 bash ```
 
 3. Dentro del contenedor, ejecuta los siguientes comandos:
 
@@ -52,14 +88,37 @@ http://localhost:8085
 - ```chmod 777 database/database.sqlite ```
 - ```chmod 777 .env ```
 
-4. Actualizar ENV:  OPENWEATHERMAP_API_KEY
-- Debes solcitar la api key del servicio de mapa al interno y actualizar en el archivo .env 
-
-## 📡 Comandos disponibles
-- ```php artisan current {city}```
-- ```php artisan forecast {city} --days=5```
+4. Actualizar ENV:  MAIL_USERNAME  y MAIL_PASSWORD
+- Debes actaulizar las env del servicio de correo para el correcto funcionamiento
 
 
+## 📧 Correo transaccional
+
+Cuando se crea una orden (`POST /api/orders`), se envía automáticamente un correo al cliente con un resumen de su compra.
+
+---
+
+## 📄 Generación de PDF
+
+Puedes descargar un resumen de la orden en PDF desde:  
+`GET /api/orders/{order_id}/pdf`
+
+
+
+## ✅ Ejemplo de orden
+
+```json
+{
+  "client": {
+    "name": "Ana López",
+    "email": "ana@example.com"
+  },
+  "products": [
+    { "id": 1, "quantity": 2 },
+    { "id": 5, "quantity": 1 }
+  ]
+}
+```
 ## 🧪 Ejecutar pruebas
 
 ``` php artisan test```
